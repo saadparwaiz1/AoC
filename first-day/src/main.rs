@@ -3,6 +3,10 @@ use std::env;
 use std::fs;
 
 fn get_two_sum(test_num: i32, numbers: &Vec<&str>) -> i32 {
+    return __get_two_sum(test_num, numbers, -1);
+}
+
+fn __get_two_sum(test_num: i32, numbers: &Vec<&str>, current_num: i32) -> i32 {
     let mut number_map: HashMap<i32, bool> = HashMap::new();
 
     for i in numbers {
@@ -13,29 +17,37 @@ fn get_two_sum(test_num: i32, numbers: &Vec<&str>) -> i32 {
 
     for i in numbers {
         if !i.is_empty() {
-            let test: i32 = test_num - i.parse::<i32>().unwrap();
+            let i_number = i.parse::<i32>().unwrap();
+
+            if i_number == current_num {
+                return -1;
+            }
+
+            let test: i32 = test_num - i_number;
 
             if number_map.contains_key(&test) {
-                return test * i.parse::<i32>().expect("found not int");
+                return test * i_number;
             }
         }
     }
 
-    0
+    -1
 }
 
 fn get_three_sum(test_num: i32, numbers: &Vec<&str>) -> i32 {
     for i in numbers {
         if !i.is_empty() {
-            let test: i32 = test_num - i.parse::<i32>().unwrap();
-            let result = get_two_sum(test, numbers);
+            let i_number = i.parse::<i32>().unwrap();
+            let test: i32 = test_num - i_number;
+            let result = __get_two_sum(test, numbers, i_number);
 
-            if result != 0 {
-                return i.parse::<i32>().unwrap() * result;
+            if result != -1 {
+                return i_number * result;
             }
         }
     }
-    0
+
+    -1
 }
 
 fn main() {
