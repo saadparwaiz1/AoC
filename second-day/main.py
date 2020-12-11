@@ -1,4 +1,5 @@
-from utils import validate,strip
+from utils import validate, strip
+
 
 def main(args):
     with open("data/input", "r") as d:
@@ -14,6 +15,7 @@ def main(args):
             map(lambda x: int(validate.validate_index(*strip.strip(x))),
                 lines))
         print(lines)
+
 
 if __name__ == "__main__":
     main(['main', 'count'])
