@@ -1,0 +1,23 @@
+[
+ {
+  "directory": "/Users/saadparwaiz/Library/Mobile Documents/com~apple~CloudDocs/src/AoC/fifth-day",
+  "arguments": [
+   "clang",
+   "-c",
+   "util/binary_range.c",
+   "-o",
+   "util/binary_range.o"
+  ],
+  "file": "util/binary_range.c"
+ },
+ {
+  "directory": "/Users/saadparwaiz/Library/Mobile Documents/com~apple~CloudDocs/src/AoC/fifth-day",
+  "arguments": [
+   "clang",
+   "-c",
+   "-I./util",
+   "main.c"
+  ],
+  "file": "main.c"
+ }
+]
