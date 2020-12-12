@@ -36,14 +36,15 @@ func loop_start() int {
 		} else {
 			string_array := strings.Split(lines[i], " ")
 			instruction := string_array[0]
+
+			if instruction == "nop" {
+				continue
+			}
+
 			value, _ := strconv.Atoi(string_array[1])
 
 			if instruction == "acc" {
 				acc += value
-			}
-
-			if instruction == "nop" {
-				continue
 			}
 
 			if instruction == "jmp" {
