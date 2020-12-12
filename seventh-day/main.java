@@ -2,13 +2,11 @@
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.HashMap;
 import java.util.function.Function;
 import java.util.stream.Stream;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.Arrays;
 import java.util.PriorityQueue;
 
 class Bag implements Comparable < Bag > {
