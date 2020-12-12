@@ -2,6 +2,7 @@ CC=clang
 INCLUDES=-I./util
 CFLAGS=-g -Wall -std=c99 $(INCLUDES)
 LDFLAGS=-g
+LDLIBS=-lm
 
 main: util/binary_range.o main.o
 
