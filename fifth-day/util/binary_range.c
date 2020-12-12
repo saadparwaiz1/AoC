@@ -1,16 +1,14 @@
 #include "binary_range.h"
-#include <stdlib.h>
-#include <stdio.h>
 #include <math.h>
 
-int __len(char *string){
+int len(char *string){
   int i=0;
   while(string[i++]);
   return i-1;
 }
 
 char *__seperate(char *string){
-  for(int i=0; i<__len(string); i++){
+  for(int i=0; i<len(string); i++){
     if(string[i] != 'B' && string[i] != 'F'){
       return &string[i];
     }
@@ -46,7 +44,7 @@ int __calculate_column(char *string){
   int low = 0;
   int high = 7;
 
-  int length=__len(string);
+  int length=len(string);
   double average;
 
   for(int i=0; i<length; i++){

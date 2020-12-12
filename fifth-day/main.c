@@ -1,6 +1,6 @@
 #include "binary_range.h"
+
 #include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
 
 int *min_max_seating_id(int *tuple, int *elements){
@@ -23,7 +23,7 @@ int *min_max_seating_id(int *tuple, int *elements){
       ids = realloc(ids, sizeof(int)*(*elements));
     }
 
-    length[strlen(length) -1] = 0;
+    length[len(length) -1] = 0;
     int num = search(length);
 
     ids[*elements - 1] = num;

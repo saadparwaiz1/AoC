@@ -3,5 +3,6 @@
 
 int search(char *string);
 void position(char *string, int *pos);
+int len(char *string);
 
 #endif
