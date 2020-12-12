@@ -2,6 +2,7 @@
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.HashMap;
 import java.util.function.Function;
 import java.util.stream.Stream;
@@ -10,17 +11,19 @@ import java.util.regex.Pattern;
 import java.util.Arrays;
 import java.util.PriorityQueue;
 
-class Bag {
+class Bag implements Comparable < Bag > {
     String Color;
-    HashSet < String > childs;
+    int count;
+    HashSet < Bag > childs;
 
-    public Bag(String Color, HashSet < String > childs) {
+    public Bag(String Color, HashSet < Bag > childs, int count) {
         this.Color = Color;
+        this.count = count;
         this.childs = childs;
     }
 
     public String toString() {
-        return "" + childs.isEmpty();
+        return Color;
     }
 
     @Override
@@ -41,6 +44,11 @@ class Bag {
     @Override
     public int hashCode() {
         return this.Color.hashCode();
+    }
+
+    @Override
+    public int compareTo(Bag bg) {
+        return this.Color.compareTo(bg.Color);
     }
 
 }
@@ -72,17 +80,18 @@ class Mapper implements Function < String, Bag > {
             String color = matcher.group(1).replace("bags", "").replace("bag", "").replaceFirst("^\\s*", "").replaceAll("\\s+$", "");
             String child = matcher.group(2);
             if (child.compareTo("no other bags.") == 0 || child.compareTo("no other bags") == 0) {
-                bag = new Bag(color, new HashSet < String > ());
+                bag = new Bag(color, new HashSet < Bag > (), 0);
             } else {
-                HashSet < String > h = new HashSet < > ();
+                HashSet < Bag > h = new HashSet < > ();
                 String[] childs = child.split(",");
 
                 for (String s: childs) {
                     String str = s.replaceAll("[^A-Za-z ]", "").replace("bags", "").replace("bag", "").replaceFirst("^\\s*", "").replaceAll("\\s+$", "");
-                    h.add(str);
+                    String num = s.replaceAll("[A-Za-z .]", "");
+                    h.add(new Bag(str, null, Integer.parseInt(num)));
                 }
 
-                bag = new Bag(color, h);
+                bag = new Bag(color, h, 0);
             }
         }
         return bag;
@@ -95,28 +104,32 @@ class Main {
         HashSet < String > hset = new HashSet < > ();
 
         hset.add(bag.Color);
-        PriorityQueue < String > pq = new PriorityQueue < > (bag.childs);
+        PriorityQueue < Bag > pq = new PriorityQueue < > (bag.childs);
+
+        Bag shiny_gold = new Bag("shiny gold", null, -1);
 
         while (!pq.isEmpty()) {
-            if (pq.contains("shiny gold")) {
+            if (pq.contains(shiny_gold)) {
                 return true;
             }
 
-            String head = pq.poll();
+            Bag head = pq.poll();
 
-            if (h.containsKey(head) && h.get(head)) {
+
+            if (h.containsKey(head.Color) && h.get(head.Color)) {
                 return true;
             }
 
-            if (!hset.contains(head)) {
-                pq.addAll(map.get(head).childs);
+            if (!hset.contains(head.Color)) {
+                pq.addAll(map.get(head.Color).childs);
+                hset.add(head.Color);
             }
         }
 
         return false;
     }
 
-    public static void count_gold_children() throws IOException {
+    public static void count_gold() throws IOException {
         HashMap < String, Bag > h = new HashMap < > ();
         HashMap < String, Boolean > h_bool = new HashMap < > ();
         ProcessData process = new ProcessData("data/input");
@@ -140,7 +153,36 @@ class Main {
         System.out.println(count);
     }
 
+    private static int count_helper(HashSet < Bag > h, HashMap < String, Bag > map) {
+        if (h.size() == 0) {
+            return 0;
+        }
+
+        int count = 0;
+
+        for (Bag bg: h) {
+            count = count + bg.count + bg.count * count_helper(map.get(bg.Color).childs, map);
+        }
+
+        return count;
+    }
+
+    public static void count_gold_children() throws IOException {
+        HashMap < String, Bag > h = new HashMap < > ();
+        ProcessData process = new ProcessData("data/input");
+        Stream < Bag > bag_stream = process.getStream();
+        Bag[] bags = bag_stream.toArray(Bag[]::new);
+
+        for (Bag bag: bags) {
+            h.put(bag.Color, bag);
+        }
+
+        int count = count_helper(h.get("shiny gold").childs, h);
+        System.out.println(count);
+    }
+
     public static void main(String[] args) throws IOException {
+        count_gold();
         count_gold_children();
     }
 }
