@@ -3,36 +3,35 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int *min_max_seating_id(int *tuple, int *elements){
+int *min_max_seating_id(int *tuple, int *elements) {
   FILE *file = fopen("data/input", "r");
 
   char length[1000];
   int *ids;
 
-  int max=-1;
-  int min=128*8 + 8;
+  int max = -1;
+  int min = 128 * 8 + 8;
 
-  while(fgets(length, 1000, file)){
+  while (fgets(length, 1000, file)) {
 
-    if(!*elements){
+    if (!*elements) {
       ids = malloc(sizeof(int));
       *elements += 1;
-    }
-    else{
+    } else {
       *elements += 1;
-      ids = realloc(ids, sizeof(int)*(*elements));
+      ids = realloc(ids, sizeof(int) * (*elements));
     }
 
-    length[len(length) -1] = 0;
+    length[len(length) - 1] = 0;
     int num = search(length);
 
     ids[*elements - 1] = num;
 
-    if(num > max){
+    if (num > max) {
       max = num;
     }
 
-    if(num < min){
+    if (num < min) {
       min = num;
     }
   }
@@ -45,9 +44,9 @@ int *min_max_seating_id(int *tuple, int *elements){
   return ids;
 }
 
-int find(int *ids, int length, int id){
-  for(int i=0; i<length; i++){
-    if(ids[i] == id){
+int find(int *ids, int length, int id) {
+  for (int i = 0; i < length; i++) {
+    if (ids[i] == id) {
       return 1;
     }
   }
@@ -55,9 +54,9 @@ int find(int *ids, int length, int id){
   return 0;
 }
 
-int seating_id(int *tuple, int *ids, int length){
-  for(int i=tuple[0]; i<=tuple[1]; i++){
-    if(!find(ids, length, i)){
+int seating_id(int *tuple, int *ids, int length) {
+  for (int i = tuple[0]; i <= tuple[1]; i++) {
+    if (!find(ids, length, i)) {
       return i;
     }
   }
@@ -65,8 +64,7 @@ int seating_id(int *tuple, int *ids, int length){
   return -1;
 }
 
-
-int main(){
+int main() {
   int tuple[2];
   int elements = 0;
   int *ids = min_max_seating_id(tuple, &elements);
