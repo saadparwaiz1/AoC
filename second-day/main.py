@@ -1,4 +1,4 @@
-from utils import validate, strip
+from utils import utils
 
 
 def main(args):
@@ -7,12 +7,12 @@ def main(args):
 
     if args[1] == 'count':
         lines = sum(
-            map(lambda x: int(validate.validate_count(*strip.strip(x))),
+            map(lambda x: int(utils.validate_count(*utils.strip(x))),
                 lines))
         print(lines)
     else:
         lines = sum(
-            map(lambda x: int(validate.validate_index(*strip.strip(x))),
+            map(lambda x: int(utils.validate_index(*utils.strip(x))),
                 lines))
         print(lines)
 
