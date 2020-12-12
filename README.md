@@ -6,3 +6,4 @@ Repo to hold my solutions for Advent of Code 2020. I'm planning on using the fol
 - Python
 - C
 - zsh
+- Lua
