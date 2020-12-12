@@ -4,7 +4,8 @@ Repo to hold my solutions for Advent of Code 2020. I have used the following lan
 
 - Rust
 - Python
+- Zsh
 - C
-- zsh
 - Lua
 - Java
+- Go
