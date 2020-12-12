@@ -14,7 +14,7 @@ int *min_max_seating_id(int *tuple, int *elements){
 
   while(fgets(length, 1000, file)){
 
-    if(!elements){
+    if(!*elements){
       ids = malloc(sizeof(int));
       *elements += 1;
     }
